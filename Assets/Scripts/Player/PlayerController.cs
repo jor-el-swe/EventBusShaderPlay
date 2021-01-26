@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (playerSpeed * Time.deltaTime);
+        transform.position += new Vector3(Input.GetAxis("Horizontal")*2, 0, Input.GetAxis("Vertical")) * (playerSpeed * Time.deltaTime);
         if (Input.GetKey(KeyCode.Space) && !isJumping){
             isJumping = true;
             StartCoroutine(jump());
@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator jump(){
-        Debug.Log("Jumping\n");
         while (transform.position.y < (startYCoord + jumpHeight)){
             transform.position = new Vector3(transform.position.x,transform.position.y + 3, transform.position.z );
             yield return new WaitForSeconds(0.01f);
