@@ -71,13 +71,29 @@
                  //f = abs(cos(a*3.));
                  //f = abs(cos(a*2.5))*.5+.3;
                  //f = abs(cos(a*12.)*sin(a*3.))*.8+.1;
-                // f = smoothstep(-.5,1., cos(a*10.))*0.2+0.5;
+                  //f = smoothstep(-.5,1., cos(a*10.))*0.2+0.5;
 
-                color = 1.-smoothstep(f,f+0.02,r);
+                 //play with animation
+                 f = cos(5*a*sin(_Time.y));
+
+                 color = 1.-smoothstep(f,f+0.02,r);
+                 color = 1.-smoothstep(f,f,r*sin(2*_Time.y)*3);
 
                 return float4(color, 1.0);
             }
 
+            #define PI 3.14159265359
+            float2x2 rotate2d(float _angle){
+                return float2x2(cos(_angle),-sin(_angle),
+                sin(_angle),cos(_angle));
+            }
+
+            fixed4 rotatePropeller(float2 uv){
+                uv -= 0.5;
+                uv = mul(uv,rotate2d( -_Time.a ));
+                uv += 0.5;
+                return propeller(uv);
+            }
             fixed4 frag (v2f i) : SV_Target
             {
                 float2 uv = i.uv;
@@ -92,7 +108,16 @@
                 //return sinColors();
 
                 //sample 3, propeller
-                return propeller(uv);
+                //return propeller(uv);
+
+                //sample4, rotating propeller
+                //return rotatePropeller(uv);
+
+                //sample5, scaling up the uv
+                uv *= 10.0;      // Scale up the space by 3
+                uv = frac(uv); // Wrap around 1.0
+                return rotatePropeller(uv);
+
             }
 
 
