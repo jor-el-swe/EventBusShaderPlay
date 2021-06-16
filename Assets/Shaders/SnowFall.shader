@@ -76,7 +76,7 @@
                         // Later sheets should have, on average, larger and faster flakes
                         // (to emulate parallax scrolling)
                         float size = 0.002 * k * (1. + rnd(j)/2.);            
-                        float speed = -(size * .75 + rnd(k) / 1.5);
+                        float speed = -0.3*(size * .75 + rnd(k) / 1.5);
                         
                         // The two terms randomize the x pos and spread it out enough that we don't
                         // get weird hard lines where no snow passes.
