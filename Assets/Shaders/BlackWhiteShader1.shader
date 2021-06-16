@@ -116,7 +116,7 @@
                 //sample5, scaling up the uv
                 uv *= 10.0;      // Scale up the space by 3
                 uv = frac(uv); // Wrap around 1.0
-                return rotatePropeller(uv);
+                return rotatePropeller(uv);              
 
             }
 
