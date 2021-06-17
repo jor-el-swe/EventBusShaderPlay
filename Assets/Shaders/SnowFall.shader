@@ -3,6 +3,7 @@
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        _FieldSize ("SnowField Size", Float) = 3
     }
     SubShader
     {
@@ -34,6 +35,7 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            float _FieldSize;
 
             v2f vert (appdata v)
             {
@@ -67,7 +69,10 @@
             fixed4 frag (v2f i) : SV_Target
             {
                 uv = i.uv;
-                float3 col = float3(0.6, 0.6, 0.6);
+                uv *= _FieldSize;      // Scale up the space by 3
+                uv = frac(uv); // Wrap around 1.0
+                float3 col = 0;
+                col = float3(0.6, 0.6, 0.6);
                 for (float k = 1.; k <= _NUMSHEETS; k++){
                     for (float j = 1.; j <= _NUMFLAKES; j++){
                         // We want fewer flakes as they get larger
@@ -91,6 +96,7 @@
                         col +=  (1. - k/_NUMSHEETS) * drawFlake(center, size);
                     }
                    }
+
 	               return float4(col,1.0);
             }
             
